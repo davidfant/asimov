@@ -1,10 +1,10 @@
 import { table } from 'table';
 import { Sample, OdooSample, Function, EvaluationQuizItem } from './types';
 import timekeeper from 'timekeeper';
-import { createLogger } from './logger';
+import pino from 'pino';
 // import { restoreOdooSnapshot } from './functions/odoo/snapshot/restore';
 
-const logger = createLogger('asimov');
+const logger = pino({ name: 'asimov' });
 
 
 export class Asimov {
@@ -103,6 +103,6 @@ export class Asimov {
     ]);
     logger.info('Quiz Answers:\n' + tableData);
 
-    logger.info('Raw:\n' + JSON.stringify(raw, null, 2));
+    logger.info(raw, 'Raw');
   }
 }

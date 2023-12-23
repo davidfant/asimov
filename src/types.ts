@@ -1,9 +1,11 @@
+import { JSONSchema7 } from "json-schema";
 
 export interface Function<Input extends {} = {}, Output extends {} = {}> {
   name: string;
   description: string;
   icon?: string;
   slug: string;
+  inputSchema: JSONSchema7;
   call(input: Input): Promise<Output>;
 }
 

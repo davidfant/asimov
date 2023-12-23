@@ -1,15 +1,18 @@
 {
   "scripts": {
-    "dev": "ts-node example"
+    "dev": "ts-node example | yarn pino-pretty"
   },
   "dependencies": {
+    "openai": "^4.24.1",
+    "pino": "^8.17.1",
+    "pino-pretty": "^10.3.0",
     "table": "^6.8.1",
     "timekeeper": "^2.3.1",
     "typescript": "^5.3.3",
-    "uuid": "^9.0.1",
-    "winston": "^3.11.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/json-schema": "^7.0.15",
     "@types/node": "^20.10.5",
     "@types/table": "^6.3.2",
     "@types/uuid": "^9.0.7",
