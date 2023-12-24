@@ -3,6 +3,7 @@
     "dev": "ts-node example | yarn pino-pretty"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.11.0",
     "openai": "^4.24.1",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",
