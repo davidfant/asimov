@@ -1,5 +1,6 @@
 import { search } from './functions/wikipedia/search';
 import { readPage } from './functions/wikipedia/readPage';
+import { listEvents } from './functions/odoo/modules/calendar/listEvents';
 import { sendMessage, sendMessageWithContext } from './functions/persona/sendMessage';
 
 
@@ -9,4 +10,7 @@ export * from './types';
 export const functions = {
   wikipedia: { search, readPage },
   persona: { sendMessage, sendMessageWithContext },
+  odoo: {
+    calendar: { listEvents },
+  },
 };

@@ -1,6 +1,6 @@
 import pino from 'pino';
-import { Function } from '../../types';
-import { createCompletion } from '../../util/openai';
+import { Function } from '@asimov/types';
+import { createCompletion } from '@asimov/util/openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 
 const logger = pino({ name: 'persona' });

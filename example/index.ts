@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { ChatCompletionMessageParam, ChatCompletionTool, FunctionParameters } from 'openai/resources';
 import { Asimov, EvaluationQuizItem, Function, Sample } from '../src';
 import { samples } from './samples';
@@ -118,7 +119,7 @@ async function runAgent(
 }
 
 (async () => {
-  const asimov = new Asimov(samples);
+  const asimov = new Asimov(samples, path.join(__dirname, 'snapshots'));
 
   for (const sample of asimov.samples) {
     const functions = asimov.prepare(sample);

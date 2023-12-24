@@ -15,8 +15,9 @@ export class Asimov {
   _sampleFunctions: Record<number, string[]> = {};
   _sampleQuiz: Record<number, EvaluationQuizItem[]> = {};
 
-  constructor(samples: Sample[]) {
+  constructor(samples: Sample[], odooSnapshotDir: string | null = null) {
     this.samples = samples;
+    this.odooSnapshotDir = odooSnapshotDir;
   }
 
   prepare(sample: Sample): Function[] {

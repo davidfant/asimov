@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch';
-import { Function } from '../../types';
+import { Function } from '@asimov/types';
 import { ElasticSearchRecord } from './types';
 
 interface Input {

@@ -9,7 +9,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "@asimov/*": ["src/*"]
+    }
   },
   "include": ["src/**/*", "example/**/*"],
   "exclude": ["node_modules", "dist"]

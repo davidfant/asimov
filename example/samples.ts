@@ -1,7 +1,7 @@
-import { Sample, functions } from "../src";
+import { OdooSample, Sample, functions } from "../src";
 import * as exampleFunctions from "./functions/add";
 
-export const samples: Sample[] = [{
+export const samples: (Sample | OdooSample)[] = [{
   name: 'Add two numbers',
   instructions: 'What is 1782937829 + 973912412?',
   functions: [exampleFunctions.add],
@@ -49,6 +49,19 @@ export const samples: Sample[] = [{
     quiz: [{
       question: 'In what city does the friend live?',
       answer: 'San Francisco',
+    }],
+  },
+}, {
+  type: 'odoo',
+  snapshot: 'cal',
+  name: 'List Calendar Events',
+  instructions: 'List calendar events for November 2023',
+  functions: [functions.odoo.calendar.listEvents],
+  expected: {
+    functions: [functions.odoo.calendar.listEvents.slug],
+    quiz: [{
+      question: 'Who is attending the event on the 22th?',
+      answer: 'Administrator',
     }],
   },
 }];
