@@ -38,5 +38,17 @@ export const samples: Sample[] = [{
       answer: 'Cumbria',
     }],
   }
+}, {
+  name: 'Message Friend',
+  instructions: 'Send a message to your friend asking them how they are doing.',
+  functions: [
+    functions.persona.sendMessageWithContext('Say that you recently moved to San Francisco.'),
+  ],
+  expected: {
+    functions: [functions.persona.sendMessage.slug],
+    quiz: [{
+      question: 'In what city does the friend live?',
+      answer: 'San Francisco',
+    }],
+  },
 }];
-
