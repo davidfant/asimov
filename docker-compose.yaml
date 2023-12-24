@@ -43,7 +43,7 @@ services:
     environment:
       - HOST=odoo-db
     volumes:
-      - ./asimov/functions/odoo/snapshot/data:/var/lib/odoo
+      - ./src/functions/odoo/snapshot/data:/var/lib/odoo
 
 volumes:
   elasticsearch-data:

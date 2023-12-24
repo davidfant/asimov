@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "dev": "ts-node example | yarn pino-pretty"
+    "dev": "ts-node example | yarn pino-pretty",
+    "odoo:reset": "ts-node src/functions/odoo/snapshot/reset.ts | yarn pino-pretty",
+    "wikipedia:index": "python3 -m src.functions.wikipedia.util.index"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
