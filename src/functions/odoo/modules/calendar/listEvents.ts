@@ -24,6 +24,7 @@ export const listEvents: Function<Input, Output> = {
       startDate: { type: 'string', format: 'YYYY-MM-DD' },
       endDate: { type: 'string', format: 'YYYY-MM-DD' },
     },
+    required: ['startDate', 'endDate'],
   },
   async call(input) {
     const odoo = new OdooAPI();

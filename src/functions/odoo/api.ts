@@ -3,7 +3,7 @@ import pino from 'pino';
 
 const logger = pino({ name: 'odoo.api' });
 
-export enum Command {
+export enum OdooCommand {
   CREATE = 0,
   UPDATE = 1,
   DELETE = 2,
