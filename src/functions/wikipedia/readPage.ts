@@ -1,8 +1,8 @@
 import { Client } from '@elastic/elasticsearch';
-import { Function } from '@asimov/types';
+import { Function } from 'asimov/types';
 import { ElasticSearchRecord } from './types';
 
-interface Input {
+export interface Input {
   link: string;
 }
 
@@ -11,7 +11,7 @@ interface Page {
   content: string; // 'Markdown content'
 }
 
-interface Output {
+export interface Output {
   page: Page | null;
 }
 
@@ -59,7 +59,7 @@ export const readPage: Function<Input, Output> = {
     properties: {
       link: {
         type: 'string',
-        description: 'Link to a Wikipedia page',
+        description: 'Link to a Wikipedia page, starting with /wiki/',
       },
     },
     required: ['link'],

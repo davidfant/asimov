@@ -1,15 +1,15 @@
 import pino from 'pino';
-import { Function } from '@asimov/types';
-import { createCompletion } from '@asimov/util/openai';
+import { Function } from 'asimov/types';
+import { createCompletion } from 'asimov/util/openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 
 const logger = pino({ name: 'persona' });
 
-interface Input {
+export interface Input {
   message: string;
 }
 
-interface Output {
+export interface Output {
   message: string | null;
 }
 

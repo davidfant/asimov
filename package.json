@@ -1,6 +1,12 @@
 {
+  "name": "asimov",
+  "repository": "https://github.com/davidfant/asimov",
+  "author": "davidfant",
+  "main": "dist/src",
+  "types": "dist/src",
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register example | yarn pino-pretty",
+    "build": "yarn tsc && tsconfig-replace-paths",
     "odoo:reset": "ts-node -r tsconfig-paths/register src/functions/odoo/snapshot/reset.ts | yarn pino-pretty",
     "odoo:restore": "./src/functions/odoo/snapshot/restore.sh",
     "wikipedia:index": "python3 -m src.functions.wikipedia.util.index"
@@ -27,6 +33,7 @@
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsconfig-replace-paths": "^0.0.14",
     "unzipper": "^0.10.14"
   }
 }

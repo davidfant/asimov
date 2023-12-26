@@ -1,7 +1,7 @@
 import { Client } from '@elastic/elasticsearch';
-import { Function } from '@asimov/types';
+import { Function } from 'asimov/types';
 
-interface Input {
+export interface Input {
   query: string;
 }
 
@@ -11,7 +11,7 @@ interface Result {
   snippet: string;
 }
 
-interface Output {
+export interface Output {
   results: Result[];
 }
 

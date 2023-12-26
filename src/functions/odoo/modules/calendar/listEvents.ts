@@ -1,14 +1,14 @@
-import { Function } from '@asimov/types';
-import { OdooAPI } from '@asimov/functions/odoo/api';
+import { Function } from 'asimov/types';
+import { OdooAPI } from 'asimov/functions/odoo/api';
 import dayjs from 'dayjs';
 import { Event, toEvent } from './types';
 
-interface Input {
+export interface Input {
   startDate: string; // format: 'YYYY-MM-DD'
   endDate: string; // format: 'YYYY-MM-DD'
 }
 
-interface Output {
+export interface Output {
   events: Event[];
 }
 

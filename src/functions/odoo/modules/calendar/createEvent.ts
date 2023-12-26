@@ -1,9 +1,8 @@
-import { Function } from '@asimov/types';
-import { OdooAPI, OdooCommand } from '@asimov/functions/odoo/api';
-import dayjs from 'dayjs';
+import { Function } from 'asimov/types';
+import { OdooAPI, OdooCommand } from 'asimov/functions/odoo/api';
 import { Event, toEvent } from './types';
 
-interface Input {
+export interface Input {
   name: string;
   description: string;
   attendeeIds: number[];
@@ -11,8 +10,8 @@ interface Input {
   endDate: string; // format: 'YYYY-MM-DD' or 'YYYY-MM-DD HH:mm'
 }
 
-interface Output {
-  events: Event;
+export interface Output {
+  event: Event;
 }
 
 
