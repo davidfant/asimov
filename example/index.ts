@@ -1,6 +1,7 @@
 import * as path from 'path';
-import { ChatCompletionMessageParam, ChatCompletionTool, FunctionParameters } from 'openai/resources';
+import { ChatCompletionMessageParam, ChatCompletionTool } from 'openai/resources';
 import { Asimov, EvaluationQuizItem, Function, Sample } from '../src';
+import { zodToJsonSchema } from 'zod-to-json-schema';
 import { samples } from './samples';
 import { createCompletion } from '../src/util/openai';
 import pino from 'pino';
@@ -30,7 +31,7 @@ async function runAgent(
           function: {
             name: fn.slug,
             description: fn.description,
-            parameters: fn.inputSchema as FunctionParameters,
+            parameters: zodToJsonSchema(fn.inputSchema),
           },
         })),
         {
@@ -122,7 +123,7 @@ async function runAgent(
   const asimov = new Asimov(samples, path.join(__dirname, 'snapshots'));
 
   for (const sample of asimov.samples) {
-    const functions = asimov.prepare(sample);
+    const { functions } = asimov.prepare(sample);
     logger.info({ name: sample.name }, 'Running sample');
     const quiz = await runAgent(sample, functions);
     logger.info({ name: sample.name, quiz }, 'Finished sample');

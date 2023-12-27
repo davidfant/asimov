@@ -1,6 +1,5 @@
 import { table } from 'table';
 import { Sample, OdooSample, Function, EvaluationQuizItem } from './types';
-import timekeeper from 'timekeeper';
 import pino from 'pino';
 // import { restoreOdooSnapshot } from './functions/odoo/snapshot/restore';
 
@@ -20,7 +19,7 @@ export class Asimov {
     this.odooSnapshotDir = odooSnapshotDir;
   }
 
-  prepare(sample: Sample): Function[] {
+  prepare(sample: Sample) {
     if (sample.type === 'odoo') {
       if (!this.odooSnapshotDir) {
         throw new Error('odooSnapshotDir must be set when using OdooSample');
@@ -29,16 +28,18 @@ export class Asimov {
       // restoreOdooSnapshot((sample as OdooSample).snapshot, this.odooSnapshotDir);
     }
 
-    timekeeper.freeze(new Date(sample.date ?? this.defaultDate));
+    // timekeeper.freeze(new Date(sample.date ?? this.defaultDate));
 
     const idx = this.samples.indexOf(sample);
-    return sample.functions.map((fn) => ({
+    const functions = sample.functions.map((fn): Function => ({
       ...fn,
       call: (input) => {
         this._sampleFunctions[idx] = [...(this._sampleFunctions[idx] ?? []), fn.slug];
         return fn.call(input);
       }
-    }))
+    }));
+
+    return { functions, date: new Date(sample.date ?? this.defaultDate) };
   }
 
   submit(sample: Sample, quiz: EvaluationQuizItem[]): void {

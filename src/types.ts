@@ -1,12 +1,16 @@
-import { JSONSchema7 } from "json-schema";
+import { z } from "zod";
 
-export interface Function<Input extends {} = {}, Output extends {} = {}> {
+export interface Function<
+  Input extends z.ZodObject<any, any, any, any> = z.ZodObject<any, any, any, any>,
+  Output extends z.ZodObject<any, any, any, any> = z.ZodObject<any, any, any, any>
+> {
   name: string;
   description: string;
   icon?: string;
   slug: string;
-  inputSchema: JSONSchema7;
-  call(input: Input): Promise<Output>;
+  inputSchema: Input;
+  outputSchema: Output;
+  call(input: z.infer<Input>): Promise<z.infer<Output>>;
 }
 
 export interface EvaluationQuizItem {

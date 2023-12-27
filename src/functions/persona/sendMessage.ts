@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import pino from 'pino';
 import { Function } from 'asimov/types';
 import { createCompletion } from 'asimov/util/openai';
@@ -5,13 +6,16 @@ import { ChatCompletionMessageParam } from 'openai/resources';
 
 const logger = pino({ name: 'persona' });
 
-export interface Input {
-  message: string;
-}
+const inputSchema = z.object({
+  message: z.string(),
+}).required();
 
-export interface Output {
-  message: string | null;
-}
+const outputSchema = z.object({
+  message: z.string().nullable(),
+});
+
+export type Input = z.infer<typeof inputSchema>;
+export type Output = z.infer<typeof outputSchema>;
 
 interface Context {
   persona: string;
@@ -75,20 +79,15 @@ async function sendMessageCall(input: Input, context: Context): Promise<Output> 
   }
 }
 
-export function sendMessageWithContext(persona: string, history: Context['history'] = []): Function<Input, Output> {
+export function sendMessageWithContext(persona: string, history: Context['history'] = []): Function<typeof inputSchema, typeof outputSchema> {
   const context: Context = { persona, history };
   return {
     name: 'Send Message',
     slug: 'send_message',
     description: 'Send a message',
+    inputSchema,
+    outputSchema,
     call: (input: Input) => sendMessageCall(input, context),
-    inputSchema: {
-      type: 'object',
-      properties: {
-        message: { type: 'string' },
-      },
-      required: ['message'],
-    },
   };
 }
 

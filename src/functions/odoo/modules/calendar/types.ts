@@ -1,21 +1,23 @@
+import { z } from "zod";
 import { OdooAPI } from "../../api";
 import dayjs from 'dayjs';
 
 
-export interface EventUser {
-  id: number;
-  name: string;
-  isOrganizer: boolean;
-}
+export const eventSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  start: z.string(),
+  end: z.string(),
+  attendees: z.array(z.object({
+    id: z.number(),
+    name: z.string(),
+    isOrganizer: z.boolean(),
+  })),
+});
 
-export interface Event {
-  id: number;
-  name: string;
-  description: string;
-  start: string;
-  end: string;
-  attendees: EventUser[];
-}
+export type Event = z.infer<typeof eventSchema>;
+export type EventUser = Event['attendees'][number];
 
 export async function toEvent(data: Record<string, any>, odoo: OdooAPI): Promise<Event> {
   return {

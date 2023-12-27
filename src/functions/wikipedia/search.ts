@@ -1,19 +1,23 @@
+import { z } from 'zod';
 import { Client } from '@elastic/elasticsearch';
 import { Function } from 'asimov/types';
 
-export interface Input {
-  query: string;
-}
+const inputSchema = z.object({
+  query: z.string(),
+});
 
-interface Result {
-  link: string;
-  title: string;
-  snippet: string;
-}
+const outputSchema = z.object({
+  results: z.array(
+    z.object({
+      link: z.string(),
+      title: z.string(),
+      snippet: z.string(),
+    }),
+  ),
+});
 
-export interface Output {
-  results: Result[];
-}
+export type Input = z.infer<typeof inputSchema>;
+export type Output = z.infer<typeof outputSchema>;
 
 async function searchCall(
   input: Input,
@@ -54,16 +58,11 @@ async function searchCall(
 }
 
 
-export const search: Function<Input, Output> = {
+export const search: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'Search Wikipedia',
   slug: 'search_wikipedia',
   description: 'Search Wikipedia by a query',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      query: { type: 'string' },
-    },
-    required: ['query'],
-  },
+  inputSchema,
+  outputSchema,
   call: searchCall,
 };

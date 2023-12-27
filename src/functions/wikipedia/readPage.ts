@@ -1,19 +1,21 @@
+import { z } from 'zod';
 import { Client } from '@elastic/elasticsearch';
 import { Function } from 'asimov/types';
 import { ElasticSearchRecord } from './types';
 
-export interface Input {
-  link: string;
-}
+const inputSchema = z.object({
+  link: z.string().describe('Link to a Wikipedia page, starting with /wiki/'),
+}).required();
 
-interface Page {
-  title: string;
-  content: string; // 'Markdown content'
-}
+const outputSchema = z.object({
+  page: z.object({
+    title: z.string(),
+    content: z.string(),
+  }).nullable(),
+});
 
-export interface Output {
-  page: Page | null;
-}
+export type Input = z.infer<typeof inputSchema>;
+export type Output = z.infer<typeof outputSchema>;
 
 // Function to read a page
 async function readPageCall(
@@ -49,19 +51,11 @@ async function readPageCall(
   };
 }
 
-export const readPage: Function<Input, Output> = {
+export const readPage: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'Read Wikipedia Page',
   slug: 'read_wikipedia_page',
   description: 'Read a Wikipedia page by a link',
   call: readPageCall,
-  inputSchema: {
-    type: 'object',
-    properties: {
-      link: {
-        type: 'string',
-        description: 'Link to a Wikipedia page, starting with /wiki/',
-      },
-    },
-    required: ['link'],
-  },
+  inputSchema,
+  outputSchema,
 };

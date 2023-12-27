@@ -1,31 +1,29 @@
+import { z } from 'zod';
 import { Function } from 'asimov/types';
 import { OdooAPI } from 'asimov/functions/odoo/api';
 import dayjs from 'dayjs';
-import { Event, toEvent } from './types';
+import { eventSchema, toEvent } from './types';
 
-export interface Input {
-  startDate: string; // format: 'YYYY-MM-DD'
-  endDate: string; // format: 'YYYY-MM-DD'
-}
+const inputSchema = z.object({
+  startDate: z.string().describe('YYYY-MM-DD'),
+  endDate: z.string().describe('YYYY-MM-DD'),
+});
 
-export interface Output {
-  events: Event[];
-}
+const outputSchema = z.object({
+  events: z.array(eventSchema),
+});
+
+export type Input = z.infer<typeof inputSchema>;
+export type Output = z.infer<typeof outputSchema>;
 
 
-export const listEvents: Function<Input, Output> = {
+export const listEvents: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'List Calendar Events',
   slug: 'list_calendar_events',
   description: 'List events in Odoo Calendar',
   icon: 'http://localhost:8069/calendar/static/description/icon.png',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      startDate: { type: 'string', format: 'YYYY-MM-DD' },
-      endDate: { type: 'string', format: 'YYYY-MM-DD' },
-    },
-    required: ['startDate', 'endDate'],
-  },
+  inputSchema,
+  outputSchema,
   async call(input) {
     const odoo = new OdooAPI();
     const startDate = dayjs(input.startDate).startOf('day').format('YYYY-MM-DD HH:mm:ss');
