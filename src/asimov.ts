@@ -47,7 +47,7 @@ export class Asimov {
     this._sampleQuiz[idx] = quiz;
   }
 
-  evaluate(): void {
+  evaluate(options: { raw?: boolean } = {}): void {
     if (!(Object.keys(this._sampleFunctions).sort().every((value, index) => Number(value) === index))) {
       throw new Error('_sampleFunctions keys do not match sample indices');
     }
@@ -105,6 +105,8 @@ export class Asimov {
     ]);
     logger.info('Quiz Answers:\n' + tableData);
 
-    logger.info(raw, 'Raw');
+    if (options.raw) {
+      logger.info(raw, 'Raw');
+    }
   }
 }
