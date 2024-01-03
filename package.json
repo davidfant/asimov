@@ -1,6 +1,6 @@
 {
   "name": "asimov-evals",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "repository": "https://github.com/davidfant/asimov",
   "author": "davidfant",
   "main": "dist/src",
@@ -16,7 +16,7 @@
     "@elastic/elasticsearch": "^8.11.0",
     "dayjs": "^1.11.10",
     "extract-zip": "^2.0.1",
-    "openai": "^4.19.0",
+    "openai": "4.19.0",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",
     "table": "^6.8.1",
