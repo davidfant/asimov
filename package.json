@@ -1,5 +1,5 @@
 {
-  "name": "asimov",
+  "name": "asimov-evals",
   "version": "0.0.1",
   "repository": "https://github.com/davidfant/asimov",
   "author": "davidfant",
@@ -10,14 +10,13 @@
     "build": "yarn tsc && tsconfig-replace-paths",
     "odoo:reset": "ts-node -r tsconfig-paths/register src/functions/odoo/snapshot/reset.ts | yarn pino-pretty",
     "odoo:restore": "./src/functions/odoo/snapshot/restore.sh",
-    "wikipedia:index": "python3 -m src.functions.wikipedia.util.index",
-    "postinstall": "yarn build"
+    "wikipedia:index": "python3 -m src.functions.wikipedia.util.index"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
     "dayjs": "^1.11.10",
     "extract-zip": "^2.0.1",
-    "openai": "^4.24.1",
+    "openai": "^4.19.0",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",
     "table": "^6.8.1",
