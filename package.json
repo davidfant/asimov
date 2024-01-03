@@ -10,7 +10,8 @@
     "build": "yarn tsc && tsconfig-replace-paths",
     "odoo:reset": "ts-node -r tsconfig-paths/register src/functions/odoo/snapshot/reset.ts | yarn pino-pretty",
     "odoo:restore": "./src/functions/odoo/snapshot/restore.sh",
-    "wikipedia:index": "python3 -m src.functions.wikipedia.util.index"
+    "wikipedia:index": "python3 -m src.functions.wikipedia.util.index",
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
