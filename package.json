@@ -1,5 +1,6 @@
 {
   "name": "asimov",
+  "version": "0.0.1",
   "repository": "https://github.com/davidfant/asimov",
   "author": "davidfant",
   "main": "dist/src",
@@ -14,6 +15,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^8.11.0",
     "dayjs": "^1.11.10",
+    "extract-zip": "^2.0.1",
     "openai": "^4.24.1",
     "pino": "^8.17.1",
     "pino-pretty": "^10.3.0",
@@ -34,7 +36,6 @@
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "tsconfig-replace-paths": "^0.0.14",
-    "unzipper": "^0.10.14"
+    "tsconfig-replace-paths": "^0.0.14"
   }
 }

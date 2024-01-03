@@ -123,7 +123,7 @@ async function runAgent(
   const asimov = new Asimov(samples, path.join(__dirname, 'snapshots'));
 
   for (const sample of asimov.samples) {
-    const { functions } = asimov.prepare(sample);
+    const { functions } = await asimov.prepare(sample);
     logger.info({ name: sample.name }, 'Running sample');
     const quiz = await runAgent(sample, functions);
     logger.info({ name: sample.name, quiz }, 'Finished sample');

@@ -83,7 +83,7 @@ export function sendMessageWithContext(persona: string, history: Context['histor
   const context: Context = { persona, history };
   return {
     name: 'Send Message',
-    slug: 'send_message',
+    slug: 'sendMessage',
     description: 'Send a message',
     inputSchema,
     outputSchema,

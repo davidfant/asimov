@@ -2,11 +2,11 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
-import * as unzipper from 'unzipper';
 import * as rimraf from 'rimraf';
+import extract from 'extract-zip';
 import pino from 'pino';
 
-const logger = pino({ name: 'odoo.restore' });
+const logger = pino({ name: 'odoo.restore', level: 'debug' });
 
 const defaultDatabaseUrl = 'postgres://odoo:odoo@localhost:8070/odoo';
 const defaultFilestoreDir = path.join(__dirname, 'data', 'filestore', 'odoo');
@@ -24,7 +24,7 @@ function restoreFilestore(filestoreDir: string, odooFilestoreDir: string) {
   if (!fs.existsSync(path.dirname(odooFilestoreDir))) {
     fs.mkdirSync(path.dirname(odooFilestoreDir), { recursive: true });
   }
-  copyDir(filestoreDir, odooFilestoreDir);
+  fs.renameSync(filestoreDir, odooFilestoreDir);
 }
 
 function restoreDatabase(dumpPath: string, odooDatabaseUrl: string) {
@@ -41,47 +41,36 @@ function restoreDatabase(dumpPath: string, odooDatabaseUrl: string) {
   execSync(`psql ${odooDatabaseUrl} < ${dumpPath}`, { stdio: 'ignore' });
 }
 
-function restartOdooContainer() {
+async function restartOdooContainer() {
   logger.info('Restarting Odoo container');
   execSync('docker restart odoo', { stdio: 'ignore' });
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
-function restore(name: string, snapshotDir: string, odooDatabaseUrl: string = defaultDatabaseUrl, odooFilestoreDir: string = defaultFilestoreDir) {
+export async function restore(
+  name: string,
+  snapshotDir: string,
+  odooDatabaseUrl: string = defaultDatabaseUrl,
+  odooFilestoreDir: string = defaultFilestoreDir,
+) {
   const snapshotPath = path.join(snapshotDir, `${name}.zip`);
   logger.info(`Restoring snapshot ${name} from ${snapshotPath}`);
 
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'snapshot-'));
 
   logger.debug({ snapshotPath, tempDir }, 'Extracting snapshot');
-  fs.createReadStream(snapshotPath)
-    .pipe(unzipper.Extract({ path: tempDir }))
-    .on('close', () => {
-      restoreFilestore(path.join(tempDir, 'filestore'), odooFilestoreDir);
-      restoreDatabase(path.join(tempDir, 'dump.sql'), odooDatabaseUrl);
-      restartOdooContainer();
-      logger.info(`Restored snapshot ${name}`);
-    });
-}
+  await extract(snapshotPath, { dir: tempDir });
 
-function copyDir(src: string, dest: string) {
-  fs.readdirSync(src, { withFileTypes: true }).forEach((dirent) => {
-    const srcPath = path.join(src, dirent.name);
-    const destPath = path.join(dest, dirent.name);
-
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
-    }
-
-    dirent.isDirectory() ? copyDir(srcPath, destPath) : fs.copyFileSync(srcPath, destPath);
-  });
+  restoreFilestore(path.join(tempDir, 'filestore'), odooFilestoreDir);
+  restoreDatabase(path.join(tempDir, 'dump.sql'), odooDatabaseUrl);
+  await restartOdooContainer();
+  logger.info(`Restored snapshot ${name}`);
 }
 
 // Main
 if (require.main === module) {
   logger.level = 'debug';
   const args = process.argv.slice(2);
-
-  console.log('dang...', process.argv);
 
   const name = args[0];
   const snapshotDir = args[1];

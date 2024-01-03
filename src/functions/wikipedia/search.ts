@@ -60,7 +60,7 @@ async function searchCall(
 
 export const search: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'Search Wikipedia',
-  slug: 'search_wikipedia',
+  slug: 'searchWikipedia',
   description: 'Search Wikipedia by a query',
   inputSchema,
   outputSchema,

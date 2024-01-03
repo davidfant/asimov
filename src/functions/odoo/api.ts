@@ -13,7 +13,7 @@ export enum OdooCommand {
   SET = 6,
 }
 
-interface SearchFilter {
+export interface OdooSearchFilter {
   field: string;
   op: string;
   value: any;
@@ -88,7 +88,7 @@ export class OdooAPI {
     });
   }
 
-  async searchRead(model: string, fields: string[], filters: SearchFilter[] = []): Promise<Record<string, any>[]> {
+  async searchRead(model: string, fields: string[], filters: OdooSearchFilter[] = []): Promise<Record<string, any>[]> {
     const response = await this.request<{ records: Record<string, any>[] }>(
       model, 
       'web_search_read', 

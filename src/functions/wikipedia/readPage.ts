@@ -53,7 +53,7 @@ async function readPageCall(
 
 export const readPage: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'Read Wikipedia Page',
-  slug: 'read_wikipedia_page',
+  slug: 'readWikipediaPage',
   description: 'Read a Wikipedia page by a link',
   call: readPageCall,
   inputSchema,

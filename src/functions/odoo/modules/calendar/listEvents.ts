@@ -19,7 +19,7 @@ export type Output = z.infer<typeof outputSchema>;
 
 export const listEvents: Function<typeof inputSchema, typeof outputSchema> = {
   name: 'List Calendar Events',
-  slug: 'list_calendar_events',
+  slug: 'listCalendarEvents',
   description: 'List events in Odoo Calendar',
   icon: 'http://localhost:8069/calendar/static/description/icon.png',
   inputSchema,

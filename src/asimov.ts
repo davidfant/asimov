@@ -1,7 +1,7 @@
 import { table } from 'table';
 import { Sample, OdooSample, Function, EvaluationQuizItem } from './types';
 import pino from 'pino';
-// import { restoreOdooSnapshot } from './functions/odoo/snapshot/restore';
+import { restore as restoreOdooSnapshot } from './functions/odoo/snapshot/restore';
 
 const logger = pino({ name: 'asimov' });
 
@@ -19,13 +19,12 @@ export class Asimov {
     this.odooSnapshotDir = odooSnapshotDir;
   }
 
-  prepare(sample: Sample) {
+  async prepare(sample: Sample) {
     if (sample.type === 'odoo') {
       if (!this.odooSnapshotDir) {
         throw new Error('odooSnapshotDir must be set when using OdooSample');
       }
-      console.log('TODO: restore', (sample as OdooSample).snapshot);
-      // restoreOdooSnapshot((sample as OdooSample).snapshot, this.odooSnapshotDir);
+      await restoreOdooSnapshot((sample as OdooSample).snapshot, this.odooSnapshotDir);
     }
 
     // timekeeper.freeze(new Date(sample.date ?? this.defaultDate));
