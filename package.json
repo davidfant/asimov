@@ -1,6 +1,6 @@
 {
   "name": "asimov-evals",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": "https://github.com/davidfant/asimov",
   "author": "davidfant",
   "main": "dist/src",
