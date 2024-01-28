@@ -53,7 +53,7 @@ async function runAgent(
       break;
     }
 
-    messages.push({ role: 'assistant', tool_calls: choice.message.tool_calls });
+    messages.push({ content: '', role: 'assistant', tool_calls: choice.message.tool_calls });
 
     for (const tc of choice.message.tool_calls!) {
       if (tc.function.name === 'done') {

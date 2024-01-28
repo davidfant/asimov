@@ -6,6 +6,7 @@ import { createCustomer } from './functions/odoo/modules/ecommerce/createCustome
 import { createOrder } from './functions/odoo/modules/ecommerce/createOrder';
 import { searchProducts } from './functions/odoo/modules/ecommerce/searchProducts';
 import { sendMessage, sendMessageWithContext } from './functions/persona/sendMessage';
+import { createLead } from './functions/odoo/modules/crm/createLead';
 
 
 export * from './asimov';
@@ -17,5 +18,6 @@ export const functions = {
   odoo: {
     calendar: { listEvents, createEvent },
     ecommerce: { createCustomer, createOrder, searchProducts },
+    crm: { createLead },
   },
 };

@@ -6,7 +6,7 @@ import { OdooAPI, OdooCommand } from 'asimov/functions/odoo/api';
 const inputSchema = z.object({
   customerId: z.number(),
   lineItems: z.array(z.object({
-    product_id: z.number(),
+    productId: z.number(),
     quantity: z.number(),
   })),
 });
@@ -34,8 +34,8 @@ export const createOrder: Function<typeof inputSchema, typeof outputSchema> = {
       'sale.order',
       {
         order_line: input.lineItems.map((li) => [OdooCommand.CREATE, ref, {
-          name: `Product ${li.product_id}`,
-          product_id: li.product_id,
+          name: `Product ${li.productId}`,
+          product_id: li.productId,
           product_uom_qty: li.quantity,
         }]),
         partner_id: input.customerId,

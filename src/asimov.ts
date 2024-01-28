@@ -1,9 +1,10 @@
 import { table } from 'table';
 import { Sample, OdooSample, Function, EvaluationQuizItem } from './types';
-import pino from 'pino';
+// import pino from 'pino';
 import { restore as restoreOdooSnapshot } from './functions/odoo/snapshot/restore';
 
-const logger = pino({ name: 'asimov' });
+// const logger = pino({ name: 'asimov' });
+const logger = console;
 
 
 export class Asimov {
